@@ -1,4 +1,4 @@
-
+// $( function() {} = shortcut for '$(document).ready(function(){})' (IIFE)
 $( function() {
     const stateSelect = document.getElementById('state');
     states.forEach(function(state) {
@@ -7,10 +7,16 @@ $( function() {
         option.text = state.name;
         stateSelect.appendChild(option);
     });
-
+    // JQUERY PLUGIN : dropdown menus
+    // 'selectmenu()' = Duplicates & extends functionality of a native HTML <select><option></select>
+    // reported issues : order of the dropdown options changing unexpectedly / load time populating after select
     $( "#department" ).selectmenu();
     $( "#state" ).selectmenu();
 
+    
+    // JQUERY PLUGIN : datepicker
+    // tied to a standard form input field
+    // reported issues: can be slow & unresponsive
     $('#date-of-birth').datetimepicker({
         timepicker: false,
         format: 'm/d/Y'

@@ -23,5 +23,8 @@ function saveEmployee() {
     };
     employees.push(employee);
     localStorage.setItem('employees', JSON.stringify(employees));
+    
+    // JQUERY PLUGIN : modal
+    // reported issues: incompatible with applying custom styles
     $('#confirmation').modal();
 }

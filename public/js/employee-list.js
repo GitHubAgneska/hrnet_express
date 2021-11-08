@@ -1,7 +1,9 @@
-
+// $( function() {} = shortcut for '$(document).ready(function(){})' (IIFE)
 $(function() {
     const employees = JSON.parse(localStorage.getItem('employees'));
 
+    // JQUERY PLUGIN : data table
+    // reported issues: slow to load new data when new employee added (creating and loading the whole table each time )
     $('#employee-table').DataTable({
         data: employees,
         columns: [
