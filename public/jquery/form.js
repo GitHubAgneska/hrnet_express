@@ -18,7 +18,7 @@ $( function() {
     // tied to a standard form input field
     // reported issues: can be slow & unresponsive
     $('#date-of-birth').datetimepicker({
-        timepicker: false,
+        timepicker: true,
         format: 'm/d/Y'
     });
     $('#start-date').datetimepicker({
