@@ -13,7 +13,11 @@
     "ajax": "^0.0.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "jquery": "^3.6.0"
+    "faker": "^5.5.3",
+    "jquery": "^3.6.0",
+    "miragejs": "^0.1.42",
+    "node-localstorage": "^2.2.1",
+    "seedrandom": "^3.0.5"
   },
   "devDependencies": {
     "uuid": "^8.3.2"

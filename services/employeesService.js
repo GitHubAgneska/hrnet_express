@@ -1,6 +1,27 @@
 const Employee = require('../db/models/employeeModel')
-const storage = window.localStorage;
-const uuidv4 = require("uuid/v4")
+const client = require('../db/api/client')
+
+if (typeof localStorage === "undefined" || localStorage === null) {
+    var LocalStorage = require('node-localstorage').LocalStorage;
+    storage = new LocalStorage('./scratch');
+}
+
+
+module.exports.getEmployeesListFromMirage = async(req, res) => {
+    let response = {}
+    console.log('request started')
+    try { 
+        const responseFromMirage = await client.get('/fakeApi/employees-list')
+        response.body = responseFromMirage
+        localStorage.setItem("allEmployees", JSON.stringify(responseFromMirage));
+
+    }
+    catch (error) {
+        console.log('Error in userController.js when fetching from Mirage')
+        response.status = 400
+    }
+    //return res.status(response.status).send(response)
+}
 
 module.exports.getEmployeesList = async (req, res) => {
     let response = {}
@@ -24,7 +45,7 @@ module.exports.createEmployee = async (req, res, employee ) => {
         employee.department,
         employee.dob
     );
-    newEmployee.id = uuidv4();
+    newEmployee.id = Math.random();
     newEmployee.address = new Object( employee.street, employee.city, employee.state, employee.zipCode );
     console.log('new employee = ', newEmployee);
 
