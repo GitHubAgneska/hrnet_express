@@ -16,6 +16,7 @@
     "faker": "^5.5.3",
     "jquery": "^3.6.0",
     "miragejs": "^0.1.42",
+    "node-fetch": "^2.6.0",
     "node-localstorage": "^2.2.1",
     "seedrandom": "^3.0.5"
   },

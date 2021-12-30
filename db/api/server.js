@@ -64,7 +64,7 @@ let server = createServer({
 
         const server = this
 
-        this.get("/employees-list", schema => {
+        this.get("/employees", schema => {
             return schema.employees.all();
         });
 
@@ -118,7 +118,7 @@ let server = createServer({
         }),
         employeesList: IdSerializer,
     },
-    seeds(server) { server.createList('employee', 100) ; }
+    seeds(server) { server.createList('employee', 100) ; console.log('--generating list---')}
 })
 
 return server; }

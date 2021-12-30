@@ -1,26 +1,14 @@
 const Employee = require('../db/models/employeeModel')
-const client = require('../db/api/client')
+const { client, get }= require('../db/api/client')
 
 if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
-    storage = new LocalStorage('./scratch');
+    localStorage = new LocalStorage('./scratch');
 }
 
-
-module.exports.getEmployeesListFromMirage = async(req, res) => {
-    let response = {}
-    console.log('request started')
-    try { 
-        const responseFromMirage = await client.get('/fakeApi/employees-list')
-        response.body = responseFromMirage
-        localStorage.setItem("allEmployees", JSON.stringify(responseFromMirage));
-
-    }
-    catch (error) {
-        console.log('Error in userController.js when fetching from Mirage')
-        response.status = 400
-    }
-    //return res.status(response.status).send(response)
+module.exports.setListToStorage = async(list) => {
+    console.log('setListToStorage called')
+    localStorage.setItem("allEmployees", JSON.stringify(list))
 }
 
 module.exports.getEmployeesList = async (req, res) => {
@@ -60,6 +48,22 @@ module.exports.createEmployee = async (req, res, employee ) => {
     localStorage.setItem("allEmployees", JSON.stringify(allEmployees));
 }
 
-module.exports.getEmployee = async (req, res, id) => {
 
-}
+/* /* miragejs config --- compatibility nodejs issue.......
+module.exports.getEmployeesListFromMirage = async(req, res) => {
+    localStorage.clear()
+    let response = {}
+    letresponseFromMirage
+    console.log('request started')
+    try { 
+        const responseFromMirage = get('/fakeApi/employees')
+        .then(response.body = responseFromMirage)
+        .then(console.log('responseFromMirage=>', responseFromMirage))
+        .then(localStorage.setItem("allEmployees", JSON.stringify(responseFromMirage)))
+    }
+    catch (error) {
+        console.log('Error in userController.js when fetching from Mirage=>', error)
+        response.status = 400
+    }
+    // return res.status(response.status).send(response)
+} */
