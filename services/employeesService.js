@@ -6,12 +6,12 @@ if (typeof localStorage === "undefined" || localStorage === null) {
     localStorage = new LocalStorage('./scratch');
 }
 
-module.exports.setListToStorage = async(list) => {
+module.exports.setListToStorage = (list) => {
     console.log('setListToStorage called')
     localStorage.setItem("allEmployees", JSON.stringify(list))
 }
 
-module.exports.getEmployeesList = async (req, res) => {
+/* module.exports.getEmployeesList = async (req, res) => {
     let response = {}
 
     try {
@@ -24,7 +24,7 @@ module.exports.getEmployeesList = async (req, res) => {
     }
     return res.status(response.status).send(response)
 }
-
+ */
 module.exports.createEmployee = async (req, res, employee ) => {
     let newEmployee = new Employee(
         employee.firstName,

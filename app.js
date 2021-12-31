@@ -7,10 +7,7 @@ const fetch = require("node-fetch")
 const faker = require("faker");
 const _  = require('lodash')
 
-const EmployeeModel = require('./db/models/EmployeeModel');
 const states = require('./public/data/usStates')
-const departments = require('./public/data/departments')
-
 
 /* miragejs config
 const server = require('./db/api/server')
@@ -22,7 +19,7 @@ const router = express.Router();
 
 if (typeof localStorage === "undefined" || localStorage === null) {
     let LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./scratch');
+    localStorage = new LocalStorage('./public/scratch');
 }
 
 localStorage.clear()
@@ -49,8 +46,9 @@ router.get('/',function(req,res){
 /* miragejs config
 server.makeServer()
 */
-let list =[];
-void async function() {
+let emp = new Object()
+emp.list = [];
+void function() {
     localStorage.clear()
     /* fetch('https://jsonplaceholder.typicode.com/users')
         .then((response) => response.json())
@@ -58,20 +56,21 @@ void async function() {
         .catch(error => console.log(error)) */
         for (let i = 0; i < 100; i++) {
             let fakeEmployee = new Object({
-                id: Math.random(),
+                id: Math.ceil(Math.random()).toString(),
                 firstName: faker.name.firstName(),
                 lastName: faker.name.lastName(),
-                dob: faker.date.past(50, new Date(2002, 0, 1)), // -- keep date's ISO original format, then format to dd/mm/yyyy only when rendering
                 startDate: faker.date.past( 10, new Date()),
+                department: faker.random.arrayElement([ 'engineering', 'human resources', 'legal', 'marketing', 'sales' ]),
+                //department: departments[Math.floor(Math.random() * departments.length)],
+                dateOfBirth: faker.date.past(50, new Date(2002, 0, 1)), // -- keep date's ISO original format, then format to dd/mm/yyyy only when rendering
                 street: (faker.datatype.number()).toString() + ' ' + faker.address.streetName(),
                 city: faker.address.city(),
-                state: states[Math.floor(Math.random() * states.length)],
+                state: (faker.random.arrayElement(states)),
                 zipcode: _.times(5, () => _.sample('123456789')).join(''),
-                department: departments[Math.floor(Math.random() * departments.length)],
             })
-            list.push(fakeEmployee)
+            emp.list.push(fakeEmployee)
         }
-        employeesService.setListToStorage(list)
+        return localStorage.setItem("allEmployees", JSON.stringify(emp))
 }();
 
 
@@ -79,36 +78,6 @@ app.get('/employees', (req, res) => {
     res.sendFile(path.join(__dirname+'/views/employee-list.html'))
 })
 
-app.get("/", (req, res) => {
-	fakerModel.find((err, data) => {
-		if (err) { console.log(err);
-		} else if (data) { res.render("/", { data: data });
-		} else { res.render("home", { data: {} }); }
-	});
-});
-
-void async function() {
-    app.post("/", (req, res) => {
-        for (let i = 0; i < 100; i++) {
-            let fakee = new employeeModel({
-                id: Math.random(),
-                firstName: faker.name.firstName(),
-                lastName: faker.name.lastName(),
-                dob: faker.date.past(50, new Date(2002, 0, 1)), // -- keep date's ISO original format, then format to dd/mm/yyyy only when rendering
-                startDate: faker.date.past( 10, new Date()),
-                street: (faker.datatype.number()).toString() + ' ' + faker.address.streetName(),
-                city: faker.address.city(),
-                state: randomFromArray(states),
-                zipcode: _.times(5, () => _.sample('123456789')).join(''),
-                department: randomFromArray(departments)
-            })
-            fakee.save((err, data) => {
-                if (err) { console.log(err) }
-            })
-        }
-        res.redirect("/");
-    });
-}();
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
