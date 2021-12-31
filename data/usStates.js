@@ -1,5 +1,5 @@
 
-const states = [
+module.exports.states = [
     {
         "name": "Alabama",
         "abbreviation": "AL"

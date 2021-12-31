@@ -3,23 +3,22 @@ const app = express()
 const port = 3000
 const path = require('path')
 const cors = require('cors')
-const fetch = require("node-fetch")
 const faker = require("faker");
 const _  = require('lodash')
 
-const states = require('./public/data/usStates')
+const states = require('./data/usStates')
 
 /* miragejs config
 const server = require('./db/api/server')
 const { client, get } = require('./db/api/client')
 */
-const employeesService = require('./services/employeesService')
 
 const router = express.Router();
 
 if (typeof localStorage === "undefined" || localStorage === null) {
     let LocalStorage = require('node-localstorage').LocalStorage;
-    localStorage = new LocalStorage('./public/scratch');
+    localStorage = new LocalStorage('./scratch');
+    publicLocalStorage = new LocalStorage('./public/scratch');
 }
 
 localStorage.clear()
@@ -55,6 +54,7 @@ void function() {
         .then((data) => employeesService.setListToStorage(data))
         .catch(error => console.log(error)) */
         for (let i = 0; i < 100; i++) {
+            let randomState =faker.random.arrayElement(states.states);
             let fakeEmployee = new Object({
                 id: Math.ceil(Math.random()).toString(),
                 firstName: faker.name.firstName(),
@@ -65,12 +65,12 @@ void function() {
                 dateOfBirth: faker.date.past(50, new Date(2002, 0, 1)), // -- keep date's ISO original format, then format to dd/mm/yyyy only when rendering
                 street: (faker.datatype.number()).toString() + ' ' + faker.address.streetName(),
                 city: faker.address.city(),
-                state: (faker.random.arrayElement(states)),
+                state: randomState.name,
                 zipcode: _.times(5, () => _.sample('123456789')).join(''),
             })
             emp.list.push(fakeEmployee)
         }
-        return localStorage.setItem("allEmployees", JSON.stringify(emp))
+        return publicLocalStorage.setItem("allEmployees", JSON.stringify(emp))
 }();
 
 
