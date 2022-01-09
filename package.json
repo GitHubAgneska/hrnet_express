@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "faker": "^5.5.3",
     "jquery": "^3.6.0",
+    "lighthouse-batch": "^8.1.1",
     "miragejs": "^0.1.42",
     "node-fetch": "^2.6.0",
     "node-localstorage": "^2.2.1",
