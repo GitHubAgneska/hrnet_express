@@ -5,7 +5,7 @@ const path = require('path')
 const cors = require('cors')
 const faker = require("faker");
 const _  = require('lodash')
-
+const moment = require('moment')
 const states = require('./data/usStates')
 
 /* miragejs config
@@ -59,10 +59,10 @@ void function() {
                 id: Math.ceil(Math.random()).toString(),
                 firstName: faker.name.firstName(),
                 lastName: faker.name.lastName(),
-                startDate: faker.date.past( 10, new Date()),
+                startDate: moment(faker.date.past( 10, new Date())).format('MM/DD/YYYY'),
                 department: faker.random.arrayElement([ 'engineering', 'human resources', 'legal', 'marketing', 'sales' ]),
                 //department: departments[Math.floor(Math.random() * departments.length)],
-                dateOfBirth: faker.date.past(50, new Date(2002, 0, 1)), // -- keep date's ISO original format, then format to dd/mm/yyyy only when rendering
+                dateOfBirth: moment(faker.date.past(50, new Date(2002, 0, 1))).format('MM/DD/YYYY'),
                 street: (faker.datatype.number()).toString() + ' ' + faker.address.streetName(),
                 city: faker.address.city(),
                 state: randomState.name,
