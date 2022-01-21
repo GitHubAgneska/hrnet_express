@@ -1,41 +1,11 @@
-### Express base environment to compile basic html/js project
+## HRnet : original forked project + ExpressJs
 ---
+- This project was forked from https://github.com/OpenClassrooms-Student-Center/P12_Front-end (JS/Jquery) then scaffolded with ExpressJs
 
-#### Install
-```bash
-npm init
-npm install express --save
-```
+- It is the basis for this project : 
+https://github.com/GitHubAgneska/HRNET-app/blob/master/README.md 
+which is a <b>refactored version to ReactJs/Redux</b> + ExpressJs
 
-#### Init
-- create a app.js file with base scaffolding code:
-```bash
-// Imports
-const express = require('express')
-const app = express()
-const port = 5000
+- For further details, please go to https://github.com/GitHubAgneska/HRNET-app/blob/master/roadmap.md
 
-// Listen on Port 5000
-app.listen(port, () => console.info(`App listening on port ${port}`))
-```
-- launch : `node app.js`
-
-- basic app structure (with pug template engine)
-```bash
-    .
-    ├── app.js  
-    ├── package.json
-    ├── public
-    │   ├── images
-    │   ├── javascripts
-    │   └── stylesheets
-    │       └── style.css
-    ├── routes
-    │   ├── index.js
-    │   └── users.js
-    └── views
-        ├── error.pug
-        ├── index.pug
-        └── layout.pug
-
-```
+---
